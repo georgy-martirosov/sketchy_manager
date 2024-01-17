@@ -1,0 +1,13 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"addin",
+	"id":	"8f3c5874-85d5-4820-a5f7-3b1add9b6f01",
+	"author":	"Georgy",
+	"description":	{
+		"":	"Sketchy manager – tame all those sketches"
+	},
+	"version":	"1.1",
+	"runOnStartup":	true,
+	"supportedOS":	"windows|mac",
+	"editEnabled":	false
+}
