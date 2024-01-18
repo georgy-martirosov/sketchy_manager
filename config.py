@@ -11,6 +11,7 @@ COMMAND_NAME = 'Toggle sketches visibility'
 PREFIX = 'Sketchy_Manager'
 PANEL_NAME = PREFIX + '_panel'
 BUTTON_NAME = PREFIX + '_button'
+DEBUG = True
 
 # Palettes
 sample_palette_id = f'{COMPANY_NAME}_{ADDIN_NAME}_palette_id'

@@ -2,12 +2,14 @@ import adsk.core, adsk.fusion, adsk.cam, traceback
 import os
 from ...lib import fusion360utils as futil
 from ... import config as cfg
+from ... import sketchy_utils as sketchy
 
 
 # Global list to keep references to handlers to avoid premature garbage collection
 handlers = []
-
-vp = adsk.core.Viewport
+app = adsk.core.Application.get()
+ui = app.userInterface
+cmdDefs = ui.commandDefinitions
 
 
 def collect_visible_sketches(components):
@@ -54,7 +56,6 @@ class ToggleSketchVisibilityHandler(adsk.core.CommandEventHandler):
 
     def notify(self, args):
         try:
-            
             app = adsk.core.Application.get()
             design = adsk.fusion.Design.cast(app.activeProduct)
             all_components = design.allComponents
@@ -94,46 +95,19 @@ class ToggleSketchVisibilityDestroyHandler(adsk.core.CommandEventHandler):
         pass  # Don't terminate the add-in
 
 # Startup function for the add-in
-def start():
+def start(panel):
     try:
-        app = adsk.core.Application.get()
-        ui = app.userInterface
-        cmdDefs = ui.commandDefinitions
 
-        button_id = 'sketch_visibility_toggle' + cfg.BUTTON_NAME
+        button_id = 'sketch_visibility_toggle' + cfg.BUTTON_NAME    
 
-        # Define the resource folder for the icons
-        script_folder = os.path.dirname(os.path.realpath(__file__))
-        resource_folder = os.path.join(script_folder, 'resources')
-
-        # Add the button
-        button = cmdDefs.itemById(button_id)
-        if not button:
-            button = cmdDefs.addButtonDefinition(button_id, 
-                                                 cfg.COMMAND_NAME, 
-                                                 'Toggle the visibility of sketches in the active design.', 
-                                                 resource_folder)
-
-        onCommandCreated = ToggleSketchVisibilityCreatedHandler()
-        button.commandCreated.add(onCommandCreated)
-        handlers.append(onCommandCreated)  # Add the handler to the global handlers list
-
-
-        # Add the button to a new custom panel
-        workspaces = ui.workspaces
-        modeling_workspace = workspaces.itemById('FusionSolidEnvironment')
-        toolbarPanels = modeling_workspace.toolbarPanels
-        custom_panel = toolbarPanels.itemById(cfg.PANEL_NAME)
-        if not custom_panel:
-            custom_panel = toolbarPanels.add(cfg.PANEL_NAME, 
-                                             cfg.ADDIN_NAME, 
-                                             cfg.PANEL_NAME, 
-                                             False)
-
-        toolbarControl = custom_panel.controls.itemById(button_id)
-        if not toolbarControl:
-            toolbarControl = custom_panel.controls.addCommand(button)
-
+        button = sketchy.add_button(
+            button_id=button_id,
+            button_title="Toggle sketches visibility", 
+            button_tooltip="Toggle the visibility of sketches in the active design.",
+            panel=panel, 
+            event_handler=ToggleSketchVisibilityCreatedHandler, 
+            handlers=handlers)
+    
         # Register the add-in to run continuously
         adsk.autoTerminate(False)
 
