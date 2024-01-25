@@ -29,11 +29,13 @@ def add_panel(panel_name="not_so_default_panel", panel_title=""):
     
     return custom_panel
 
-def add_button(button_id="not_so_default_button", button_title="", button_tooltip="", panel=False, event_handler=False, handlers=[]):
+def add_button(button_id="not_so_default_button", button_title="", button_tooltip="", panel=False, event_handler=False, handlers=[], resources=""):
 
     # script_folder = get_resources_path()
     # resource_folder = os.path.join(script_folder, 'resources')
     resource_folder = get_resources_path()
+    if (resources):
+        resource_folder = os.path.join(resource_folder, resources)
 
     button = cmdDefs.itemById(button_id)
     if not button:
