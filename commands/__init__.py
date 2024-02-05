@@ -1,9 +1,11 @@
 from .ToggleVisibilityForSketches import entry as ToggleVisibilityForSketches
 from .ViewsCommander import entry as ViewsCommander
+from .Feedback import entry as Feedback
 
 commands = [
     ToggleVisibilityForSketches,
-    ViewsCommander
+    ViewsCommander,
+    Feedback
 ]
 
 def start(panel=False):

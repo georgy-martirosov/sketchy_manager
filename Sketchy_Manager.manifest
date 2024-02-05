@@ -6,8 +6,8 @@
 	"description":	{
 		"":	"Sketchy manager – tame all those sketches"
 	},
-	"version":	"1.1",
+	"version":	"3",
 	"runOnStartup":	true,
 	"supportedOS":	"windows|mac",
-	"editEnabled":	false
+	"editEnabled":	true
 }

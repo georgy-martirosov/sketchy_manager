@@ -9,7 +9,7 @@ from ... import sketchy_utils as sketchy
 handlers = []
 app = adsk.core.Application.get()
 ui = app.userInterface
-design = adsk.fusion.Design.cast(app.activeProduct)
+design = adsk.fusion.Design
 cmdDefs = ui.commandDefinitions
 sketches = []
 hidden_sketches = []
@@ -188,7 +188,10 @@ class DestroyHandlerShowActive(adsk.core.CommandEventHandler):
 
 # Startup function for the add-in
 def start(panel):
+
     try:
+        app = adsk.core.Application.get()
+
         sketchy.add_button(
             button_id='sketch_visibility_toggle' + cfg.BUTTON_NAME    ,
             button_title="Toggle sketches visibility", 

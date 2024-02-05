@@ -3,12 +3,17 @@ import inspect
 import traceback
 import adsk.core
 from .lib import fusion360utils as futil
+from datetime import datetime
 
 app = adsk.core.Application.get()
 ui = app.userInterface
 cmdDefs = ui.commandDefinitions
 workspaces = ui.workspaces
 
+def l(str=""):
+    futil.log(datetime.now())
+    # futil.log(str)
+    # return datetime.now()
 
 def get_resources_path():
     frame = inspect.stack()[2]
